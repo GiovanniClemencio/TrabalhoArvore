@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1758028717 source:c:\users\portu\desktop\facul\ed 2\trabalhoarvore\projetoarvoreb\arvoreb.c
+
+1758029382 source:c:\users\portu\desktop\facul\ed 2\trabalhoarvore\projetoarvoreb\main.c
+	<stdio.h>
+	<stdlib.h>
+
