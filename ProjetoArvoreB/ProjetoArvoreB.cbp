@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="ArvoreB.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ArvoreB.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
