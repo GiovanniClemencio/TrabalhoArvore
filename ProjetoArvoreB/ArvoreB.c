@@ -1,12 +1,7 @@
-#define MAX 3
-
-typedef struct no{
-    int n;
-    char *chave[MAX]; // usaremos strdup para colocar os nomes de chave
-    struct no* filho[MAX + 1];
-    int folha;
-    int nivelSpell;
-}no;
+#include "ArvoreB.h"
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 
 no* criaNo();
 

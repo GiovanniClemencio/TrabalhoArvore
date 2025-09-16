@@ -1,3 +1,8 @@
+#ifndef ARVOREB_H
+#define ARVOREB_H
+
+#define MAX 4;
+
 typedef struct no{
     int n;
     char *chave[MAX]; // usaremos strdup para colocar os nomes de chave
@@ -33,3 +38,5 @@ void imprimirRec(no* atual, int nivel);
 void imprimir(no* raiz);
 
 void limpar(no *raiz);
+
+#endif
