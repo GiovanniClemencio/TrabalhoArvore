@@ -52,7 +52,7 @@ no* busca(no* raiz, char *elemento){
     }
 
     int i = 0;
-    while(i < raiz->n && (strcmp(elemento, raiz->chave[i]->nome) > 0 )) i++; // Compara todas as chaves com a string buscada, se a string buscada tiver dps da chave na ordem alfabética ,i++
+    while(i < raiz->n && (strcmp(elemento, raiz->chave[i]->nome) > 0)) i++; // Compara todas as chaves com a string buscada, se a string buscada tiver dps da chave na ordem alfabética ,i++
 
     if(i < raiz->n && (strcmp(elemento, raiz->chave[i]->nome) == 0 )){
         return raiz;
@@ -66,11 +66,77 @@ no* busca(no* raiz, char *elemento){
     }
 }
 
-void splitChildren(no *pai, int pos);
+void splitChildren(no *pai, int pos, int ordem){
+    no *menor = pai->filho[pos];
+    no *maior = criarNo();
 
-void insereNaoCheio(no *raiz, int elemento);
+    maior->folha = menor->folha;
 
-void insercaoCLRS(no **raiz, int elemento);
+    int t = (ordem + 1)/2;
+
+    for(int i = pai->n; i >= pos; i--){
+        pai->filho[i + 1] = pai->filho[i];
+        if(i != pai->n) pai->chave[i + 1] = pai->chave[i];
+    }
+    pai->filho[pos + 1] = maior;
+    pai->chave[pos] = menor->chave[t - 1];
+    pai->n++;
+
+    for(int i = 0; i < t - 1; i++){
+        if(!maior->folha) maior->filho[i] = menor->filho[t + i];
+        maior->chave[i] = menor->chave[t + i];
+        maior->n++;
+    }
+    maior->filho[maior->n] = menor->filho[menor->n];
+    menor->n = t - 1;
+}
+
+void insereNaoCheio(no *raiz, char *elemento, int ordem){
+    int pos = raiz->n - 1;
+
+    if(raiz->folha){
+        while(pos >= 0 && (strcmp(elemento, raiz->chave[pos]->nome) < 0)){
+            raiz->chave[pos + 1] = raiz->chave[pos];
+            pos--;
+        }
+        pos++; // Agora pos está na posição de inserção
+
+        raiz->chave[pos]->nome = elemento;
+        raiz->n++;
+    }else{
+        while(pos >= 0 && (strcmp(raiz->chave[pos]->nome, elemento) > 0)) pos--;
+        pos++; // Agora pos é posição do filho que pode receber o elemento
+
+        if(raiz->filho[pos]->n == ordem){
+            splitChildren(raiz, pos, ordem);
+
+            if(strcmp(raiz->chave[pos]->nome, elemento) < 0) pos++;
+        }
+        insereNaoCheio(raiz->filho[pos], elemento, ordem);
+    }
+}
+
+void insercaoCLRS(no **raiz, char *elemento){
+    ajustaNome(elemento);
+
+    if(*raiz == NULL){
+        *raiz = criaNo();
+        (*raiz)->chave[0]->nome = padronizaNome(elemento);
+        (*raiz)->n++;
+        return;
+    }
+
+    if((*raiz)->n == ordem){
+        no *novo = criaNo();
+        novo->folha = 0;
+        novo->filho[0] = *raiz;
+
+        splitChildren(novo, 0, ordem);
+
+        *raiz = novo;
+    }
+    insereNaoCheio(*raiz, elemento, ordem);
+}
 
 int predecessor(no *pai, int pos);
 

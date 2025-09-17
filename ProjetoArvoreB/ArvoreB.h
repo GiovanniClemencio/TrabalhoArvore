@@ -15,13 +15,17 @@ typedef struct no{
 
 no* criaNo(int ordem);
 
-no* busca(no* raiz, int elemento);
+char* padronizaNome(char *nome);
 
-void splitChildren(no *pai, int pos);
+void ajustaNome(char *nome);
 
-void insereNaoCheio(no *raiz, int elemento);
+no* busca(no* raiz, char *elemento);
 
-void insercaoCLRS(no **raiz, int elemento);
+void splitChildren(no *pai, int pos, int ordem);
+
+void insereNaoCheio(no *raiz, char *elemento, int ordem);
+
+void insercaoCLRS(no **raiz, char *elemento);
 
 int predecessor(no *pai, int pos);
 
@@ -39,6 +43,6 @@ void imprimirRec(no* atual, int nivel);
 
 void imprimir(no* raiz);
 
-void limpar(no *raiz);
+void limpar(no *raiz, int ordem);
 
 #endif
