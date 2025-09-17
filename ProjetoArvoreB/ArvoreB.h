@@ -1,17 +1,19 @@
 #ifndef ARVOREB_H
 #define ARVOREB_H
 
-#define MAX 4;
+typedef struct info{
+    char *nome; // usaremos strdup para colocar os nomes de chave
+    int nivel;
+}info;
 
 typedef struct no{
     int n;
-    char *chave[MAX]; // usaremos strdup para colocar os nomes de chave
-    struct no* filho[MAX + 1];
+    info *chave;
+    struct no **filho;
     int folha;
-    int nivelSpell;
 }no;
 
-no* criaNo();
+no* criaNo(int ordem);
 
 no* busca(no* raiz, int elemento);
 
