@@ -27,11 +27,15 @@ no* criaNo(int ordem){
 
 char* padronizaNome(char *nome){ // Padroniza para a struct
     char *base = "\imagens\";
-    size_t total = strlen(base) + strlen(nome) + 1;
+    size_t total = strlen(base) + strlen(nome) + 5; // O + 5 é pq precisa de 4 chars para o ".png" e 1 para o '\0';
     char *nomeNovo = malloc(total);
 
     memcpy(nomeNovo, base, strlen(base));
     memcpy(nomeNovo + strlen(base), nome, strlen(nome));
+    nomeNovo[total - 5] = '.';
+    nomeNovo[total - 4] = 'p';
+    nomeNovo[total - 3] = 'n';
+    nomeNovo[total - 2] = 'g';
     nomeNovo[total - 1] = '\0';
 
     return nomeNovo;
@@ -44,6 +48,15 @@ void ajustaNome(char *nome){ // Ajusta para a busca
             nome[i] = nome[i] + 32;
         }
     }
+}
+
+int arquivoExiste(const char *caminho){
+    FILE *f = fopen(caminho, "r");
+    if (f) {
+        fclose(f);
+        return 1; // existe
+    }
+    return 0; // não existe
 }
 
 no* busca(no* raiz, char *elemento){
@@ -117,11 +130,19 @@ void insereNaoCheio(no *raiz, char *elemento, int ordem){
 }
 
 void insercaoCLRS(no **raiz, char *elemento){
+    FILE *teste;
     ajustaNome(elemento);
+    elemento = padronizaNome(elemento)
+
+    if(!arquivoExiste(elemento)){
+        printf("Spell nao existe\n");
+        free(elemento);
+        return;
+    }
 
     if(*raiz == NULL){
         *raiz = criaNo();
-        (*raiz)->chave[0]->nome = padronizaNome(elemento);
+        (*raiz)->chave[0]->nome = elemento;
         (*raiz)->n++;
         return;
     }

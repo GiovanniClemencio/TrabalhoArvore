@@ -19,6 +19,8 @@ char* padronizaNome(char *nome);
 
 void ajustaNome(char *nome);
 
+int arquivoExiste(const char *caminho);
+
 no* busca(no* raiz, char *elemento);
 
 void splitChildren(no *pai, int pos, int ordem);
