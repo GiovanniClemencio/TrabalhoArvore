@@ -43,7 +43,7 @@ void rotDir(no *pai, int pos);
 
 void mergeChild(no *pai, int pos, int ordem);
 
-void remover(no *raiz, int elemento);
+void remover(no *raiz, const char *elemento, int ordem);
 
 void imprimirRec(no* atual, int nivel);
 
