@@ -14,7 +14,7 @@ no* criaNo(int ordem){
 
     novo->chave = malloc(sizeof(info) * ordem); // Aqui aloca dinamicamente os ponteiros de filhos
     for(int i=0; i< ordem; i++){
-        chave[i]->nome = NULL;
+        novo->chave[i]->nome = NULL;
     }
 
     novo->filho = malloc(sizeof(no*) * (ordem + 1));
@@ -25,7 +25,46 @@ no* criaNo(int ordem){
     return novo;
 }
 
-no* busca(no* raiz, int elemento);
+char* padronizaNome(char *nome){ // Padroniza para a struct
+    char *base = "\imagens\";
+    size_t total = strlen(base) + strlen(nome) + 1;
+    char *nomeNovo = malloc(total);
+
+    memcpy(nomeNovo, base, strlen(base));
+    memcpy(nomeNovo + strlen(base), nome, strlen(nome));
+    nomeNovo[total - 1] = '\0';
+
+    return nomeNovo;
+}
+
+void ajustaNome(char *nome){ // Ajusta para a busca
+    for(int i = 0; i < strlen(nome); i++){
+        if(nome[i] == ' ') nome[i] = '_';
+        if(nome[i] >= 65 && nome[i]<=90){
+            nome[i] = nome[i] + 32;
+        }
+    }
+}
+
+no* busca(no* raiz, char *elemento){
+    if(raiz == NULL){
+        return NULL;
+    }
+
+    int i = 0;
+    while(i < raiz->n && (strcmp(elemento, raiz->chave[i]->nome) > 0 )) i++; // Compara todas as chaves com a string buscada, se a string buscada tiver dps da chave na ordem alfabética ,i++
+
+    if(i < raiz->n && (strcmp(elemento, raiz->chave[i]->nome) == 0 )){
+        return raiz;
+    }else{
+        if(!raiz->folha){
+            busca(raiz->filho[i], elemento);
+        }else{
+            printf("Spell nao esta na lista!\n");
+            return;
+        }
+    }
+}
 
 void splitChildren(no *pai, int pos);
 
