@@ -8,52 +8,67 @@ int main()
     int ordem = 5; // O valor de ordem é pra ser inserido pelo usuário (é para ser o MAX)
     no *raiz= NULL;
 
-    insercaoCLRS(&raiz, "acid Splash", ordem);
-    printf("\nInsere Acid Splash: \n");
-    imprimir(raiz);
-    insercaoCLRS(&raiz, "alter self", ordem);
-    printf("\nInsere Alter Self: \n");
-    imprimir(raiz);
-    insercaoCLRS(&raiz, "blight", ordem);
-    printf("\nInsere Blight: \n");
-    imprimir(raiz);
-    insercaoCLRS(&raiz, "color spray", ordem);
-    printf("\nInsere Color Spray: \n");
-    imprimir(raiz);
-    insercaoCLRS(&raiz, "compulsion", ordem);
-    printf("\nInsere Compulsion: \n");
-    imprimir(raiz);
-
-    printf("\nArvore antes de split na raiz\n");
-    imprimir(raiz);
-
-    insercaoCLRS(&raiz, "commune", ordem);
-    printf("\nInsere Commmune: \n");
-    imprimir(raiz);
     insercaoCLRS(&raiz, "aid", ordem);
-    printf("\nInsere aid: \n");
+    printf("\nInsere Aid: \n");
     imprimir(raiz);
-    insercaoCLRS(&raiz, "BLUR", ordem);
-    printf("\nInsere blur: \n");
+
+    insercaoCLRS(&raiz, "bless", ordem);
+    printf("\nInsere bless: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "cure wounds", ordem);
+    printf("\nInsere cure wounds: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "eldritch blast", ordem);
+    printf("\nInsere eldritch blast: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "enthrall", ordem);
+    printf("\nInsere enthrall: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "confusion", ordem);
+    printf("\nInsere Confusion: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "color spray", ordem);
+    printf("\nInsere color spray: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "fireball", ordem);
+    printf("\nInsere firaball: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "power word kill", ordem);
+    printf("\nInsere power word kill: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "tongues", ordem);
+    printf("\nInsere tongues: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "creation", ordem);
+    printf("\nInsere creation: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "awaken", ordem);
+    printf("\nInsere awaken: \n");
+    imprimir(raiz);
+
+    insercaoCLRS(&raiz, "scrying", ordem);
+    printf("\nInsere scrying: \n");
+    imprimir(raiz);
+
+    remover(&raiz, "color spray", ordem);
+    printf("\nRemovendo Color Spray\n");
+    imprimir(raiz);
+
+    remover(&raiz, "fireball", ordem);
+    printf("\nRemovendo fireball\n");
     imprimir(raiz);
 
     printf("\nArvore final: \n");
-    imprimir(raiz);
-
-    remover(&raiz, "acid splash", ordem);
-    printf("\nRemovendo acid splash\n");
-    imprimir(raiz);
-
-    remover(&raiz, "alter self", ordem);
-    printf("\nRemovendo alter self\n");
-    imprimir(raiz);
-
-    remover(&raiz, "commune", ordem);
-    printf("\nRemovendo commune\n");
-    imprimir(raiz);
-
-    remover(&raiz, "compulsion", ordem);
-    printf("\nRemovendo compulsion\n");
     imprimir(raiz);
 
     limpar(raiz);

@@ -355,16 +355,21 @@ void remover(no **raiz, const char *elemento_original, int ordem){
         info substituto;
         if((*raiz)->filho[pos]->n >= t){ // Caso 2a
             substituto = predecessor(*raiz, pos);
-            remover((*raiz)->filho[pos], substituto.nome, ordem);
-            free((*raiz)->chave[pos].nome);
+
+            info aux = substituto;
+            substituto = (*raiz)->chave[pos];
             (*raiz)->chave[pos] = substituto;
+
+            remover(&(*raiz)->filho[pos], elemento_original, ordem);
         }else{
             if((*raiz)->filho[pos + 1]->n >= t){ // caso 2b
                 substituto = sucessor((*raiz), pos + 1);
 
-                remover((*raiz)->filho[pos + 1], substituto.nome, ordem);
-                free((*raiz)->chave[pos].nome);
+                info aux = substituto;
+                substituto = (*raiz)->chave[pos];
                 (*raiz)->chave[pos] = substituto;
+
+                remover(&(*raiz)->filho[pos + 1], elemento_original, ordem);
             }else{ // Caso 2 C
                 mergeChild(*raiz, pos, ordem);
 
