@@ -40,9 +40,21 @@ int main()
     printf("\nArvore final: \n");
     imprimir(raiz);
 
-    no* recebedor = busca(raiz, "commune");
-    printf("\nNo encontrado na busca: \n");
-    imprimir(recebedor);
+    remover(&raiz, "acid splash", ordem);
+    printf("\nRemovendo acid splash\n");
+    imprimir(raiz);
+
+    remover(&raiz, "alter self", ordem);
+    printf("\nRemovendo alter self\n");
+    imprimir(raiz);
+
+    remover(&raiz, "commune", ordem);
+    printf("\nRemovendo commune\n");
+    imprimir(raiz);
+
+    remover(&raiz, "compulsion", ordem);
+    printf("\nRemovendo compulsion\n");
+    imprimir(raiz);
 
     limpar(raiz);
     return 0;

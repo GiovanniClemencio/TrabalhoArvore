@@ -287,6 +287,7 @@ void rotDir(no *pai, int pos){
 }
 
 void mergeChild(no *pai, int pos, int ordem){
+
     no *menor = pai->filho[pos];
     no *maior = pai->filho[pos + 1];
 
@@ -300,19 +301,21 @@ void mergeChild(no *pai, int pos, int ordem){
         if(!menor->folha) menor->filho[i + t] = maior->filho[i];
         menor->n++;
     }
+
     if(!menor->folha) menor->filho[menor->n] = maior->filho[maior->n];
 
     for(int i = pos; i < pai->n - 1; i++){
         pai->chave[i] = pai->chave[i + 1];
         pai->filho[i + 1] = pai->filho[i + 2];
     }
+
     pai->n--;
 
     free(maior);
 }
 
-void remover(no *raiz, const char *elemento_original, int ordem){
-    if(raiz == NULL) return;
+void remover(no **raiz, const char *elemento_original, int ordem){
+    if(*raiz == NULL) return;
 
     if(!elemento_original) return;
 
@@ -334,60 +337,82 @@ void remover(no *raiz, const char *elemento_original, int ordem){
     int t = (ordem + 1)/2;
 
     int pos = 0;
-    while(pos < raiz->n && (strcmp(caminho, raiz->chave[pos].nome) > 0)) pos++;
+    while(pos < (*raiz)->n && (strcmp(caminho, (*raiz)->chave[pos].nome) > 0)) pos++;
 
-    if(raiz->folha){ // Caso 1
-        if(pos < raiz->n && strcmp(caminho, raiz->chave[pos].nome) == 0){
-            free(raiz->chave[pos].nome);
-            while(pos < raiz->n - 1){
-                raiz->chave[pos] = raiz->chave[pos + 1];
+    if((*raiz)->folha){ // Caso 1
+        if(pos < (*raiz)->n && strcmp(caminho, (*raiz)->chave[pos].nome) == 0){
+            free((*raiz)->chave[pos].nome);
+            while(pos < (*raiz)->n - 1){
+                (*raiz)->chave[pos] = (*raiz)->chave[pos + 1];
                 pos++;
             }
-            raiz->n--;
+            (*raiz)->n--;
         }
         return;
     }
 
-    if(pos < raiz->n && (strcmp(raiz->chave[pos].nome, caminho) == 0)){ // Caso 2
+    if(pos < (*raiz)->n && (strcmp((*raiz)->chave[pos].nome, caminho) == 0)){ // Caso 2
         info substituto;
-        if(raiz->filho[pos]->n >= t){ // Caso 2a
-            substituto = predecessor(raiz, pos);
-            remover(raiz->filho[pos], substituto.nome, ordem);
-            free(raiz->chave[pos].nome);
-            raiz->chave[pos] = substituto;
+        if((*raiz)->filho[pos]->n >= t){ // Caso 2a
+            substituto = predecessor(*raiz, pos);
+            remover((*raiz)->filho[pos], substituto.nome, ordem);
+            free((*raiz)->chave[pos].nome);
+            (*raiz)->chave[pos] = substituto;
         }else{
-            if(raiz->filho[pos + 1]->n >= t){ // caso 2b
-                substituto = sucessor(raiz, pos + 1);
+            if((*raiz)->filho[pos + 1]->n >= t){ // caso 2b
+                substituto = sucessor((*raiz), pos + 1);
 
-                remover(raiz->filho[pos + 1], substituto.nome, ordem);
-                free(raiz->chave[pos].nome);
-                raiz->chave[pos] = substituto;
+                remover((*raiz)->filho[pos + 1], substituto.nome, ordem);
+                free((*raiz)->chave[pos].nome);
+                (*raiz)->chave[pos] = substituto;
             }else{ // Caso 2 C
-                mergeChild(raiz, pos, ordem);
+                mergeChild(*raiz, pos, ordem);
 
-                remover(raiz->filho[pos], elemento_original, ordem);
+                remover(&(*raiz)->filho[pos], elemento_original, ordem);
             }
         }
         return;
     }
 
-    if(raiz->filho[pos]->n == t - 1){ // Caso 3
-        if(pos < raiz->n && raiz->filho[pos + 1]->n >= t){ // Caso 3 a1
-            rotEsq(raiz, pos);
+    if((*raiz)->filho[pos]->n == t - 1){ // Caso 3
+        if(pos < (*raiz)->n && (*raiz)->filho[pos + 1]->n >= t){ // Caso 3 a1
+            rotEsq(*raiz, pos);
         }else{
-            if(pos > 0 && raiz->filho[pos - 1]->n >= t){ // Caso 3 a2
-                rotDir(raiz, pos - 1);
+            if(pos > 0 && (*raiz)->filho[pos - 1]->n >= t){ // Caso 3 a2
+                rotDir(*raiz, pos - 1);
             }else{ // Caso 3b
-                if(pos < raiz->n){
-                    mergeChild(raiz, pos, ordem);
+
+                if(pos < (*raiz)->n){
+
+                    mergeChild(*raiz, pos, ordem);
+
+                    if((*raiz)->n == 0){
+                        no *aux = *raiz;
+                        *raiz = (*raiz)->filho[0];
+                        free(aux);
+                    }
+                    free(caminho);
+                    remover(&(*raiz), elemento_original, ordem);
+                    return;
                 }else{
-                    mergeChild(raiz, pos - 1, ordem);
+
+                    mergeChild(*raiz, pos - 1, ordem);
+
+                    if((*raiz)->n == 0){
+                        no *aux = *raiz;
+                        *raiz = (*raiz)->filho[0];
+                        free(aux);
+                    }
+                    free(caminho);
+                    remover(&(*raiz), elemento_original, ordem);
+                    return;
                 }
+
             }
         }
     }
-
-    remover(raiz->filho[pos], elemento_original, ordem);
+    free(caminho);
+    remover(&(*raiz)->filho[pos], elemento_original, ordem);
 }
 
 void imprimirRec(no* atual, int nivel){
