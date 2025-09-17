@@ -27,7 +27,7 @@ void splitChildren(no *pai, int pos, int ordem);
 
 void insereNaoCheio(no *raiz, char *elemento, int ordem);
 
-void insercaoCLRS(no **raiz, char *elemento);
+void insercaoCLRS(no **raiz, const char *elemento_original, int ordem);
 
 int predecessor(no *pai, int pos);
 
@@ -45,6 +45,6 @@ void imprimirRec(no* atual, int nivel);
 
 void imprimir(no* raiz);
 
-void limpar(no *raiz, int ordem);
+void limpar(no *raiz);
 
 #endif
