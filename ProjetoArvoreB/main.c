@@ -37,6 +37,9 @@ int main()
     printf("\nArvore final: \n");
     imprimir(raiz);
 
+    no* recebedor = busca(raiz, "commune");
+    printf("\nNo encontrado na busca: \n");
+    imprimir(recebedor);
 
     limpar(raiz);
     return 0;

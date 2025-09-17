@@ -15,11 +15,15 @@ typedef struct no{
 
 no* criaNo(int ordem);
 
+void abreImagem(const char *caminho);
+
 char* padronizaNome(char *nome);
 
 void ajustaNome(char *nome);
 
 int arquivoExiste(const char *caminho);
+
+no* buscaInterna(no *raiz, const char *caminho);
 
 no* busca(no* raiz, char *elemento);
 

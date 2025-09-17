@@ -36,6 +36,14 @@ no* criaNo(int ordem){
     return novo;
 }
 
+void abreImagem(const char *caminho){
+    char comando[300];
+
+    snprintf(comando, sizeof(comando), "start \"\" \"%s\"", caminho);
+
+    system(comando);
+}
+
 char* padronizaNome(char *nome){ // Padroniza para a struct
     char *base = "imagens/";
     size_t total = strlen(base) + strlen(nome) + 5; // O + 5 é pq precisa de 4 chars para o ".png" e 1 para o '\0';
@@ -74,16 +82,34 @@ int arquivoExiste(const char *caminho){
     return 0; // não existe
 }
 
-no* busca(no* raiz, char *elemento){
+no* buscaInterna(no *raiz, const char *caminho){
     if(raiz == NULL) return NULL;
 
-    if(!elemento) return;
+    int i = 0;
+    while(i < raiz->n && (strcmp(caminho, raiz->chave[i].nome) > 0)) i++; // Compara todas as chaves com a string buscada, se a string buscada tiver dps da chave na ordem alfabética ,i++
+
+    if(i < raiz->n && (strcmp(caminho, raiz->chave[i].nome) == 0 )){
+        abreImagem(caminho);
+        return raiz;
+    }else{
+        if(!raiz->folha){
+            return buscaInterna(raiz->filho[i], caminho);
+        }else{
+            printf("Spell nao esta na lista!\n");
+            free(caminho);
+
+            return NULL;
+        }
+    }
+}
+
+no* busca(no* raiz, char *elemento){
+    if(raiz == NULL || elemento == NULL) return NULL;
 
     char *temporario = strdup(elemento);
-    free(elemento);
     if(!temporario){
         printf("Erro ao criar copia do nome do spell em busca\n");
-        return;
+        return NULL;
     }
 
     ajustaNome(temporario);
@@ -92,26 +118,13 @@ no* busca(no* raiz, char *elemento){
     free(temporario);
     if(caminho == NULL){
         printf("Erro no malloc de caminho na busca\n");
-        return;
+        return NULL;
     }
 
-    int i = 0;
-    while(i < raiz->n && (strcmp(caminho, raiz->chave[i].nome) > 0)) i++; // Compara todas as chaves com a string buscada, se a string buscada tiver dps da chave na ordem alfabética ,i++
+    no *res = buscaInterna(raiz, caminho);
 
-    if(i < raiz->n && (strcmp(caminho, raiz->chave[i].nome) == 0 )){
-        free(caminho);
-
-        return raiz;
-    }else{
-        if(!raiz->folha){
-            return busca(raiz->filho[i], caminho);
-        }else{
-            printf("Spell nao esta na lista!\n");
-            free(caminho);
-
-            return NULL;
-        }
-    }
+    free(caminho);
+    return res;
 }
 
 void splitChildren(no *pai, int pos, int ordem){
