@@ -68,6 +68,10 @@ int main()
     printf("\nRemovendo fireball\n");
     imprimir(raiz);
 
+    remover(&raiz, "cure wounds", ordem);
+    printf("\nRemovendo cure wounds\n");
+    imprimir(raiz);
+
     printf("\nArvore final: \n");
     imprimir(raiz);
 

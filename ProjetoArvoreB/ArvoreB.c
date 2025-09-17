@@ -45,6 +45,9 @@ void abreImagem(const char *caminho){
 }
 
 char* padronizaNome(char *nome){ // Padroniza para a struct
+    int padronizado = 0;
+    if(strlen(nome) >= 6 && nome[0] == 'i' && nome[1] == 'm' && nome[2] == 'a' && nome[3] == 'g' && nome[4] == 'e' && nome[5] == 'n') padronizado = 1;
+    if(padronizado) return strdup(nome);
     char *base = "imagens/";
     size_t total = strlen(base) + strlen(nome) + 5; // O + 5 é pq precisa de 4 chars para o ".png" e 1 para o '\0';
 
@@ -232,20 +235,20 @@ void insercaoCLRS(no **raiz, const char *elemento_original, int ordem){
     insereNaoCheio(*raiz, caminho, ordem);
 }
 
-info predecessor(no *pai, int pos){
+no* predecessor(no *pai, int pos){
     no *buscador = pai->filho[pos];
 
     while(buscador->filho[buscador->n] != NULL) buscador = buscador->filho[buscador->n];
 
-    return buscador->chave[buscador->n - 1];
+    return buscador;
 }
 
-info sucessor(no *pai, int pos){
+no* sucessor(no *pai, int pos){
     no *buscador = pai->filho[pos];
 
     while(buscador->filho[0] != NULL) buscador = buscador->filho[0];
 
-    return buscador->chave[0];
+    return buscador;
 }
 
 void rotEsq(no *pai, int pos){
@@ -352,24 +355,21 @@ void remover(no **raiz, const char *elemento_original, int ordem){
     }
 
     if(pos < (*raiz)->n && (strcmp((*raiz)->chave[pos].nome, caminho) == 0)){ // Caso 2
-        info substituto;
+        no *substituto;
         if((*raiz)->filho[pos]->n >= t){ // Caso 2a
             substituto = predecessor(*raiz, pos);
 
-            info aux = substituto;
-            substituto = (*raiz)->chave[pos];
-            (*raiz)->chave[pos] = substituto;
+            free((*raiz)->chave[pos].nome);
+            (*raiz)->chave[pos].nome = strdup(substituto->chave[substituto->n - 1].nome);
 
-            remover(&(*raiz)->filho[pos], elemento_original, ordem);
+            remover(&(*raiz)->filho[pos], (*raiz)->chave[pos].nome, ordem);
         }else{
             if((*raiz)->filho[pos + 1]->n >= t){ // caso 2b
                 substituto = sucessor((*raiz), pos + 1);
+                free((*raiz)->chave[pos].nome);
+                (*raiz)->chave[pos].nome = strdup(substituto->chave[0].nome);
 
-                info aux = substituto;
-                substituto = (*raiz)->chave[pos];
-                (*raiz)->chave[pos] = substituto;
-
-                remover(&(*raiz)->filho[pos + 1], elemento_original, ordem);
+                remover(&(*raiz)->filho[pos + 1], (*raiz)->chave[pos].nome, ordem);
             }else{ // Caso 2 C
                 mergeChild(*raiz, pos, ordem);
 
@@ -434,7 +434,7 @@ void imprimirRec(no* atual, int nivel){
             printf(" , ");
         }
     }
-    printf("]\n");
+    printf("] n = %d\n", atual->n);
 
     for(int i = 0; i <= atual->n; i++){
         imprimirRec(atual->filho[i], nivel + 1);

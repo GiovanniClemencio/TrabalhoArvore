@@ -33,9 +33,9 @@ void insereNaoCheio(no *raiz, char *elemento, int ordem);
 
 void insercaoCLRS(no **raiz, const char *elemento_original, int ordem);
 
-info predecessor(no *pai, int pos);
+no* predecessor(no *pai, int pos);
 
-info sucessor(no *pai, int pos);
+no* sucessor(no *pai, int pos);
 
 void rotEsq(no *pai, int pos);
 

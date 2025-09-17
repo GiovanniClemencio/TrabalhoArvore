@@ -1,15 +1,15 @@
 # depslib dependency file v1.0
-1758134805 source:c:\users\portu\desktop\facul\ed 2\trabalhoarvore\projetoarvoreb\arvoreb.c
+1758152073 source:c:\users\portu\desktop\facul\ed 2\trabalhoarvore\projetoarvoreb\arvoreb.c
 	"ArvoreB.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1758137857 source:c:\users\portu\desktop\facul\ed 2\trabalhoarvore\projetoarvoreb\main.c
+1758153092 source:c:\users\portu\desktop\facul\ed 2\trabalhoarvore\projetoarvoreb\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"ArvoreB.h"
 
-1758134570 c:\users\portu\desktop\facul\ed 2\trabalhoarvore\projetoarvoreb\arvoreb.h
+1758145952 c:\users\portu\desktop\facul\ed 2\trabalhoarvore\projetoarvoreb\arvoreb.h
 
