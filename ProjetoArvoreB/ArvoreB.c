@@ -232,15 +232,84 @@ void insercaoCLRS(no **raiz, const char *elemento_original, int ordem){
     insereNaoCheio(*raiz, caminho, ordem);
 }
 
-int predecessor(no *pai, int pos);
+info predecessor(no *pai, int pos){
+    no *buscador = pai->filho[pos];
 
-int sucessor(no *pai, int pos);
+    while(buscador->filho[buscador->n] != NULL) buscador = buscador->filho[buscador->n];
 
-void rotEsq(no *pai, int pos);
+    return buscador->chave[buscador->n - 1];
+}
 
-void rotDir(no *pai, int pos);
+info sucessor(no *pai, int pos){
+    no *buscador = pai->filho[pos];
 
-void mergeChild(no *pai, int pos);
+    while(buscador->filho[0] != NULL) buscador = buscador->filho[0];
+
+    return buscador->chave[0];
+}
+
+void rotEsq(no *pai, int pos){
+    no *esq = pai->filho[pos];
+    no *dir = pai->filho[pos + 1];
+
+    esq->chave[esq->n] = pai->chave[pos];
+    esq->n++;
+    if(!esq->folha) esq->filho[esq->n] = dir->filho[0];
+
+    pai->chave[pos] = dir->chave[0];
+
+    for(int i = 0; i < dir->n - 1; i++){
+        dir->chave[i] = dir->chave[i + 1];
+        if(!dir->folha) dir->filho[i] = dir->filho[i + 1]
+    }
+    if(!dir->folha) dir->filho[dir->n - 1] = dir->filho[dir->n];
+    dir->n--;
+}
+
+void rotDir(no *pai, int pos){
+    no *esq = pai->filho[pos];
+    no *dir = pai->filho[pos + 1];
+
+    for(int i = dir->n; i > 0; i--){
+        dir->chave[i] = dir->chave[i - 1];
+        if(!dir->folha) dir->filho[i + 1] = dir->filho[i];
+    }
+    if(!dir->folha){
+        dir->filho[1] = dir->filho[0];
+        dir->filho[0] = esq->filho[esq->n];
+    }
+    dir->chave[0] = pai->chave[pos];
+    dir->n++;
+
+    pai->chave[pos] = esq->chave[esq->n - 1];
+
+    esq->n--;
+}
+
+void mergeChild(no *pai, int pos, int ordem){
+    no *menor = pai->filho[pos];
+    no *maior = pai->filho[pos + 1];
+
+    int t = (ordem + 1)/2;
+
+    menor->chave[menor->n] = pai->chave[pos];
+    menor->n++;
+
+    for(int i = 0; i < maior->n; i++){
+        menor->chave[i + t] = maior->chave[i];
+        if(!menor->folha) menor->filho[i + t] = maior->filho[i];
+        menor->n++;
+    }
+    if(!menor->folha) menor->filho[menor->n] = maior->filho[maior->n];
+
+    for(int i= pos, i < pai->n - 1; i++){
+        pai->chave[i] = pai->chave[i + 1];
+        pai->filho[i + 1] = pai->filho[i + 2];
+    }
+    pai->n--;
+
+    free(maior);
+}
 
 void remover(no *raiz, int elemento);
 

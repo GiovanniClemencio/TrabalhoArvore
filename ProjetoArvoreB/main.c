@@ -33,6 +33,9 @@ int main()
     insercaoCLRS(&raiz, "aid", ordem);
     printf("\nInsere aid: \n");
     imprimir(raiz);
+    insercaoCLRS(&raiz, "BLUR", ordem);
+    printf("\nInsere blur: \n");
+    imprimir(raiz);
 
     printf("\nArvore final: \n");
     imprimir(raiz);

@@ -33,15 +33,15 @@ void insereNaoCheio(no *raiz, char *elemento, int ordem);
 
 void insercaoCLRS(no **raiz, const char *elemento_original, int ordem);
 
-int predecessor(no *pai, int pos);
+info predecessor(no *pai, int pos);
 
-int sucessor(no *pai, int pos);
+info sucessor(no *pai, int pos);
 
 void rotEsq(no *pai, int pos);
 
 void rotDir(no *pai, int pos);
 
-void mergeChild(no *pai, int pos);
+void mergeChild(no *pai, int pos, int ordem);
 
 void remover(no *raiz, int elemento);
 
