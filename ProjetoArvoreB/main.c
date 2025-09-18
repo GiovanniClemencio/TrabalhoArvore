@@ -10,7 +10,9 @@ int main()
 
     printf("\nZX=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=XZ\n");
     printf("\nZX=-=-=-=-=-SPELLBOOK DIGITAL=-=-=-=-=XZ\n");
-    printf("\nZX=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=XZ\n");
+    printf("\nZX=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=XZ\n\n");
+
+    printf("\nO relatorio tem o nome dos autores e explica o funcionamento\n\n");
 
     printf("Digite a ordem da Arvore B: ");
     scanf("%d", &ordem);
@@ -18,6 +20,7 @@ int main()
 
     int opcao;
     char buffer[100];
+    no *receptor;
 
     do {
         printf("\n======= MENU =======\n");
@@ -40,10 +43,9 @@ int main()
                 {
                     buffer[strcspn(buffer, "\n")] = '\0';
                     insercaoCLRS(&raiz, buffer, ordem);
-                    printf("\nInserido com sucesso!\n");
                 }
                 break;
-            no *receptor;
+
             case 2:
                 receptor = NULL;
                 printf("Digite o nome do spell para buscar: ");
@@ -61,7 +63,6 @@ int main()
                 {
                     buffer[strcspn(buffer, "\n")] = '\0';
                     remover(&raiz, buffer, ordem);
-                    printf("\nRemovido com sucesso!\n");
                 }
                 break;
 

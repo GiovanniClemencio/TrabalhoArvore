@@ -98,9 +98,6 @@ no* buscaInterna(no *raiz, const char *caminho){
         if(!raiz->folha){
             return buscaInterna(raiz->filho[i], caminho);
         }else{
-            printf("Spell nao esta na lista!\n");
-            free(caminho);
-
             return NULL;
         }
     }
@@ -183,6 +180,12 @@ void insereNaoCheio(no *raiz, char *elemento, int ordem){
 void insercaoCLRS(no **raiz, const char *elemento_original, int ordem){
     if(!elemento_original) return;
 
+    no *existe = busca(*raiz, elemento_original);
+    if(existe){
+        printf("\nO Spell ja esta na arvore!\n");
+        return;
+    }
+
     char *temporario = strdup(elemento_original);
     if(!temporario){
         printf("Erro ao criar copia do nome do spell em insercaoCLRS\n");
@@ -206,7 +209,7 @@ void insercaoCLRS(no **raiz, const char *elemento_original, int ordem){
 
     if(*raiz == NULL){
         *raiz = criaNo(ordem);
-        if(raiz == NULL){
+        if(*raiz == NULL){
             printf("Erro ao criar raiz em insercaoCLRS\n");
             free(caminho);
             return;
