@@ -5,75 +5,104 @@
 
 int main()
 {
-    int ordem = 5; // O valor de ordem é pra ser inserido pelo usuário (é para ser o MAX)
-    no *raiz= NULL;
+    no *raiz = NULL;
+    int ordem;
 
-    insercaoCLRS(&raiz, "aid", ordem);
-    printf("\nInsere Aid: \n");
-    imprimir(raiz);
+    printf("\nZX=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=XZ\n");
+    printf("\nZX=-=-=-=-=-SPELLBOOK DIGITAL=-=-=-=-=XZ\n");
+    printf("\nZX=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=XZ\n");
 
-    insercaoCLRS(&raiz, "bless", ordem);
-    printf("\nInsere bless: \n");
-    imprimir(raiz);
+    printf("Digite a ordem da Arvore B: ");
+    scanf("%d", &ordem);
+    getchar();
 
-    insercaoCLRS(&raiz, "cure wounds", ordem);
-    printf("\nInsere cure wounds: \n");
-    imprimir(raiz);
+    int opcao;
+    char buffer[100];
 
-    insercaoCLRS(&raiz, "eldritch blast", ordem);
-    printf("\nInsere eldritch blast: \n");
-    imprimir(raiz);
+    do {
+        printf("\n======= MENU =======\n");
+        printf("1. Inserir spell\n");
+        printf("2. Buscar spell\n");
+        printf("3. Remover spell\n");
+        printf("4. Imprimir arvore\n");
+        printf("5. Sair\n");
+        printf("6. Adicionar 10 spells para teste.\n");
+        printf("====================\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao);
+        getchar();
 
-    insercaoCLRS(&raiz, "enthrall", ordem);
-    printf("\nInsere enthrall: \n");
-    imprimir(raiz);
+        switch(opcao)
+        {
+            case 1:
+                printf("Digite o nome do spell: ");
+                if(fgets(buffer, sizeof(buffer), stdin))
+                {
+                    buffer[strcspn(buffer, "\n")] = '\0';
+                    insercaoCLRS(&raiz, buffer, ordem);
+                    printf("\nInserido com sucesso!\n");
+                }
+                break;
+            no *receptor;
+            case 2:
+                receptor = NULL;
+                printf("Digite o nome do spell para buscar: ");
+                if(fgets(buffer, sizeof(buffer), stdin))
+                {
+                    buffer[strcspn(buffer, "\n")] = '\0';
+                    receptor = busca(raiz, buffer);
+                    if(receptor) printf("\nAbrindo imagem do spell...\n");
+                }
+                break;
 
-    insercaoCLRS(&raiz, "confusion", ordem);
-    printf("\nInsere Confusion: \n");
-    imprimir(raiz);
+            case 3:
+                printf("Digite o nome do spell que deseja remover: ");
+                if(fgets(buffer, sizeof(buffer), stdin))
+                {
+                    buffer[strcspn(buffer, "\n")] = '\0';
+                    remover(&raiz, buffer, ordem);
+                    printf("\nRemovido com sucesso!\n");
+                }
+                break;
 
-    insercaoCLRS(&raiz, "color spray", ordem);
-    printf("\nInsere color spray: \n");
-    imprimir(raiz);
+            case 4:
+                printf("\n--- Estrutura da Arvore B ---\n");
+                imprimir(raiz);
+                break;
 
-    insercaoCLRS(&raiz, "fireball", ordem);
-    printf("\nInsere firaball: \n");
-    imprimir(raiz);
+            case 5:
+                printf("Saindo...\n");
+                limpar(raiz);
+                break;
 
-    insercaoCLRS(&raiz, "power word kill", ordem);
-    printf("\nInsere power word kill: \n");
-    imprimir(raiz);
+            case 6:
+            {
+                const char *spells[10] =
+                {
+                    "Magic Missile",
+                    "Fireball",
+                    "Mage Armor",
+                    "Shield",
+                    "Cure Wounds",
+                    "Healing Word",
+                    "Eldritch Blast",
+                    "Thunderwave",
+                    "Burning Hands",
+                    "Invisibility"
+                };
+                for(int i = 0; i < 10; i++)
+                {
+                    insercaoCLRS(&raiz, spells[i], ordem);
+                }
+                printf("10 spells foram adicionados para teste.\n");
+                break;
+            }
 
-    insercaoCLRS(&raiz, "tongues", ordem);
-    printf("\nInsere tongues: \n");
-    imprimir(raiz);
+            default:
+                printf("Opcao invalida.\n");
+        }
 
-    insercaoCLRS(&raiz, "creation", ordem);
-    printf("\nInsere creation: \n");
-    imprimir(raiz);
-
-    insercaoCLRS(&raiz, "awaken", ordem);
-    printf("\nInsere awaken: \n");
-    imprimir(raiz);
-
-    insercaoCLRS(&raiz, "scrying", ordem);
-    printf("\nInsere scrying: \n");
-    imprimir(raiz);
-
-    remover(&raiz, "color spray", ordem);
-    printf("\nRemovendo Color Spray\n");
-    imprimir(raiz);
-
-    remover(&raiz, "fireball", ordem);
-    printf("\nRemovendo fireball\n");
-    imprimir(raiz);
-
-    remover(&raiz, "cure wounds", ordem);
-    printf("\nRemovendo cure wounds\n");
-    imprimir(raiz);
-
-    printf("\nArvore final: \n");
-    imprimir(raiz);
+    } while(opcao != 5);
 
     limpar(raiz);
     return 0;
