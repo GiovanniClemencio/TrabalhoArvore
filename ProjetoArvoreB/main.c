@@ -73,7 +73,6 @@ int main()
 
             case 5:
                 printf("Saindo...\n");
-                limpar(raiz);
                 break;
 
             case 6:
